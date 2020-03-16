@@ -36,8 +36,9 @@ steps:
     # then make sure to add this token as a password in the origin url before running release-it. 
   - script: |
       git config user.email "io-functions-commons@noreply.github.com"
-      git config user.name "DevOps Automation"   
+      git config user.name "rcastino"   
       git config remote.origin.url https://rcastino:${GITHUB_TOKEN}@github.com/rcastino/my_func_com.git
+      git config -l
          
       yarn release-it --ci --no-git.requireUpstream $PACKAGE_VERSION 
     env:
