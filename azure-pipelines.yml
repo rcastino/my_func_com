@@ -70,6 +70,15 @@ stages:
       # A2) Analyze source code to find errors with lint
       - job: lint
         steps:
+          - script: |
+  
+              echo "PACK VER: $PACKAGE_VERSION"
+              
+            env:
+              PACKAGE_VERSION: '$(PACKAGE_VERSION)'
+            displayName: 'PACK'
+
+
           - template: azure-templates/make-build-steps.yml
             parameters:
               make: install_dependencies
@@ -146,12 +155,28 @@ stages:
     dependsOn:
       - Build
       - Test
-    jobs:
+    jobs:    
       - job: publish_package
         steps:
-          - template: azure-templates/deploy-steps.yml
-            parameters:
-              deployType: 'publishPackage'
-              packageVersion: '$(PACKAGE_VERSION)'
-              githubToken: '$(GITHUB_TOKEN)'
-              npmToken: '$(NPM_TOKEN)'
+          - bash: |
+              echo registry=https://registry.npmjs.com/ >> .npmrc
+              echo \//registry.npmjs.org/:_authToken=$NPM_TOKEN >> .npmrc
+            env:
+              NPM_TOKEN: '$(NPM_TOKEN)'
+            displayName: 'Init .npmrc file'
+        
+            # When using an HTTPS url, you have to add the token to the CI/CD environment and 
+            # then make sure to add this token as a password in the origin url before running release-it. 
+          - script: |
+              git config user.email "r.castino@gmail.com"
+              git config user.name "rcastino"   
+              git remote rm origin
+              git remote add origin https://rcastino:${GITHUB_TOKEN}@github.com/rcastino/my_func_com.git
+              git config -l
+              echo "PACK VER: $PACKAGE_VERSION"
+              
+              yarn release-it --ci --no-git.requireUpstream $PACKAGE_VERSION 
+            env:
+              GITHUB_TOKEN: '$(GITHUB_TOKEN)'
+              PACKAGE_VERSION: '$(PACKAGE_VERSION)'
+            displayName: 'release-it'
