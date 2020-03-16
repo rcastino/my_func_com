@@ -152,12 +152,7 @@ stages:
 
 
           - bash: |
-              git clone https://github.com/rcastino/my_func_com.git 
-              cd my_func_com
-              yarn install 
-
-              echo registry=https://registry.npmjs.com/ >> .npmrc
-              echo \//registry.npmjs.org/:_authToken=$NPM_TOKEN >> .npmrc
+ 
             env:
               NPM_TOKEN: '$(NPM_TOKEN)'
             displayName: 'Init .npmrc file'
@@ -167,7 +162,12 @@ stages:
             # then make sure to add this token as a password in the origin url before running release-it. 
           - bash: |
 
-              cd /home/vsts/work/1/s
+              git clone https://github.com/rcastino/my_func_com.git 
+              cd my_func_com
+              yarn install 
+
+              echo registry=https://registry.npmjs.com/ >> .npmrc
+              echo \//registry.npmjs.org/:_authToken=$NPM_TOKEN >> .npmrc
               
               
               git config -l
@@ -190,4 +190,5 @@ stages:
             env:
               GITHUB_TOKEN: '$(GITHUB_TOKEN)'
               PACKAGE_VERSION: '$(PACKAGE_VERSION)'
+              NPM_TOKEN: '$(NPM_TOKEN)'
             displayName: 'release-it'
