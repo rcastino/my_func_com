@@ -163,18 +163,20 @@ stages:
             # When using an HTTPS url, you have to add the token to the CI/CD environment and 
             # then make sure to add this token as a password in the origin url before running release-it. 
           - bash: |
+
+              git config -l
               git config user.email "r.castino@gmail.com"
               git config user.name "rcastino"   
 
               echo "PACK VER: $PACKAGE_VERSION"
-              git config branch.master.remote origin
-              git branch.master.merge refs/heads/master
-              git remote add origin https://rcastino:${GITHUB_TOKEN}@github.com/rcastino/my_func_com.git
 
+              git remote remove origin
+              git remote add origin https://rcastino:${GITHUB_TOKEN}@github.com/raicastino/test.git
+              
+              git config -l
 
-            
-              git config -l   
-              yarn release-it --ci  $PACKAGE_VERSION 
+              yarn release-it --ci  --no-git.requireUpstream
+      
 
               
             env:
