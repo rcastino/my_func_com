@@ -167,11 +167,11 @@ stages:
               git config user.name "rcastino"   
 
               echo "PACK VER: $PACKAGE_VERSION"
-              
-              git config --global --add url."git@github.com:".insteadOf "https://github.com/"
+              git remote add origin https://rcastino:${GITHUB_TOKEN}@github.com/rcastino/my_func_com.git
+
 
               git config -l   
-              yarn release-it --ci  $PACKAGE_VERSION 
+              yarn release-it $PACKAGE_VERSION 
 
               
             env:
