@@ -170,7 +170,10 @@ stages:
 
               git remote remove origin
               git remote add origin https://pippo:${GITHUB_TOKEN}@github.com/rcastino/my_func_com.git
-              
+              git config branch.master.merge refs/heads/master
+              git config branch.master.remote origin
+
+
               git config -l
 
               yarn release-it --ci  --no-git.requireUpstream
