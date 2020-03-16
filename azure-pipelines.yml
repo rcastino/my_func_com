@@ -135,8 +135,6 @@ stages:
   #    - Build / Test succeeded 
   #    - manual trigger
   - stage: Deploy_production
-    pool:
-      vmImage: 'windows-2019'
     condition: 
       and(
         succeeded(),
