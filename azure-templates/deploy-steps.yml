@@ -24,28 +24,29 @@ steps:
   - template: ./make-build-steps.yml
     parameters:
       make: build
-    
-  - bash: |
-      echo registry=https://registry.npmjs.com/ >> .npmrc
-      echo \//registry.npmjs.org/:_authToken=$NPM_TOKEN >> .npmrc
-    env:
-      NPM_TOKEN: '${{ parameters.npmToken }}'
-    displayName: 'Init .npmrc file'
+      
+  - ${{ if eq(parameters.deployType, 'publishPackage') }}:      
+    - bash: |
+        echo registry=https://registry.npmjs.com/ >> .npmrc
+        echo \//registry.npmjs.org/:_authToken=$NPM_TOKEN >> .npmrc
+      env:
+        NPM_TOKEN: '${{ parameters.npmToken }}'
+      displayName: 'Init .npmrc file'
   
-    # When using an HTTPS url, you have to add the token to the CI/CD environment and 
-    # then make sure to add this token as a password in the origin url before running release-it. 
-  - script: |
-      git config user.email "r.castino@gmail.com"
-      git config user.name "rcastino"   
-      git remote rm origin
-      git remote add origin https://rcastino:${GITHUB_TOKEN}@github.com/rcastino/my_func_com.git
+      # When using an HTTPS url, you have to add the token to the CI/CD environment and 
+      # then make sure to add this token as a password in the origin url before running release-it. 
+    - script: |
+        git config user.email "r.castino@gmail.com"
+        git config user.name "rcastino"   
+        git remote rm origin
+        git remote add origin https://rcastino:${GITHUB_TOKEN}@github.com/rcastino/my_func_com.git
 
-      git config -l
-      echo "PACK VER: $PACKAGE_VERSION"
+        git config -l
+        echo "PACK VER: $PACKAGE_VERSION"
          
-      yarn release-it --ci --no-git.requireUpstream $PACKAGE_VERSION 
-    env:
-      GITHUB_TOKEN: '${{ parameters.githubToken }}'
-      PACKAGE_VERSION: '${{ parameters.packageVersion }}'
-    displayName: 'release-it'
+        yarn release-it --ci --no-git.requireUpstream $PACKAGE_VERSION 
+      env:
+        GITHUB_TOKEN: '${{ parameters.githubToken }}'
+        PACKAGE_VERSION: '${{ parameters.packageVersion }}'
+      displayName: 'release-it'
   
