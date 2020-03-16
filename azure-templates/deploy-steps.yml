@@ -33,7 +33,7 @@ steps:
     displayName: 'Init .npmrc file'
   
   - script: |
-      yarn release-it $PACKAGE_VERSION
+      yarn release-it --no-git.requireUpstream $PACKAGE_VERSION 
     env:
       GITHUB_TOKEN: '${{ parameters.githubToken }}'
       PACKAGE_VERSION: '${{ parameters.packageVersion }}'
