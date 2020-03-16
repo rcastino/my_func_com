@@ -162,7 +162,7 @@ stages:
             # then make sure to add this token as a password in the origin url before running release-it. 
           - bash: |
 
-              git clone https://github.com/rcastino/my_func_com.git 
+              git clone git@github.com:rcastino/my_func_com.git
               cd my_func_com
               yarn install 
 
@@ -176,14 +176,12 @@ stages:
 
               echo "PACK VER: $PACKAGE_VERSION"
 
-              git remote remove origin
-              git remote add origin https://pippo:${GITHUB_TOKEN}@github.com/rcastino/my_func_com.git
-              
+        
 
 
               git config -l
 
-              yarn release-it major --ci --no-git.requireUpstream --no-git.requireCleanWorkingDir 
+              yarn release-it major --ci 
       
 
               
