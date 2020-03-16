@@ -162,27 +162,17 @@ stages:
             # then make sure to add this token as a password in the origin url before running release-it. 
           - bash: |
 
-              git clone git@github.com:rcastino/my_func_com.git
+              git clone https://pippo:${GITHUB_TOKEN}@github.com/rcastino/my_func_com.git
               cd my_func_com
               yarn install 
 
               echo registry=https://registry.npmjs.com/ >> .npmrc
               echo \//registry.npmjs.org/:_authToken=$NPM_TOKEN >> .npmrc
-              
-              
-              git config -l
-              git config user.email "r.castino@gmail.com"
-              git config user.name "rcastino"   
-
-              echo "PACK VER: $PACKAGE_VERSION"
-
-        
-
 
               git config -l
 
               yarn release-it major --ci 
-      
+                    
 
               
             env:
