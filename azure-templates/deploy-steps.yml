@@ -34,7 +34,8 @@ steps:
   
   - script: |
       git config user.email "io-functions-commons@noreply.github.com"
-      git config user.name "DevOps Automation"      
+      git config user.name "DevOps Automation"   
+      git config -l
       yarn release-it --no-git.requireUpstream $PACKAGE_VERSION 
     env:
       GITHUB_TOKEN: '${{ parameters.githubToken }}'
