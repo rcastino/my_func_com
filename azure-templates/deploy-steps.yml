@@ -35,10 +35,13 @@ steps:
     # When using an HTTPS url, you have to add the token to the CI/CD environment and 
     # then make sure to add this token as a password in the origin url before running release-it. 
   - script: |
-      git config user.email "io-functions-commons@noreply.github.com"
+      git config user.email "r.castino@gmail.com"
       git config user.name "rcastino"   
-      git config remote.origin.url https://rcastino:${GITHUB_TOKEN}@github.com/rcastino/my_func_com.git
+      git remote rm origin
+      git remote add origin https://rcastino:${GITHUB_TOKEN}@github.com/rcastino/my_func_com.git
+
       git config -l
+      echo "PACK VER: $PACKAGE_VERSION"
          
       yarn release-it --ci --no-git.requireUpstream $PACKAGE_VERSION 
     env:
