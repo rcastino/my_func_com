@@ -147,21 +147,28 @@ stages:
     jobs:    
       - job: publish_package
         steps:
-          - template:  azure-templates/make-build-steps.yml
-            parameters:
-              make: build
+          - checkout: none
+
+
 
           - bash: |
+              git clone https://github.com/rcastino/my_func_com.git 
+              cd my_func_com
+
               echo registry=https://registry.npmjs.com/ >> .npmrc
               echo \//registry.npmjs.org/:_authToken=$NPM_TOKEN >> .npmrc
             env:
               NPM_TOKEN: '$(NPM_TOKEN)'
             displayName: 'Init .npmrc file'
+
         
             # When using an HTTPS url, you have to add the token to the CI/CD environment and 
             # then make sure to add this token as a password in the origin url before running release-it. 
           - bash: |
 
+
+              yarn install 
+              
               git config -l
               git config user.email "r.castino@gmail.com"
               git config user.name "rcastino"   
@@ -170,9 +177,7 @@ stages:
 
               git remote remove origin
               git remote add origin https://pippo:${GITHUB_TOKEN}@github.com/rcastino/my_func_com.git
-              git config branch.master.merge refs/heads/master
-              git config branch.master.remote origin
-              git symbolic-ref HEAD refs/heads/master
+              
 
 
               git config -l
