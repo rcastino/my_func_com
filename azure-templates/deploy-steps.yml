@@ -32,10 +32,13 @@ steps:
       NPM_TOKEN: '${{ parameters.npmToken }}'
     displayName: 'Init .npmrc file'
   
+    # When using an HTTPS url, you have to add the token to the CI/CD environment and 
+    # then make sure to add this token as a password in the origin url before running release-it. 
   - script: |
       git config user.email "io-functions-commons@noreply.github.com"
       git config user.name "DevOps Automation"   
-      git config -l
+      git config remote.origin.url https://raicastino:${GITHUB_TOKEN}@github.com/raicastino/my_func_com.git
+         
       yarn release-it --ci --no-git.requireUpstream $PACKAGE_VERSION 
     env:
       GITHUB_TOKEN: '${{ parameters.githubToken }}'
