@@ -167,7 +167,7 @@ stages:
         
             # When using an HTTPS url, you have to add the token to the CI/CD environment and 
             # then make sure to add this token as a password in the origin url before running release-it. 
-          - script: |
+          - bash: |
               git config user.email "r.castino@gmail.com"
               git config user.name "rcastino"   
               git remote rm origin
