@@ -37,7 +37,7 @@ steps:
   - script: |
       git config user.email "io-functions-commons@noreply.github.com"
       git config user.name "DevOps Automation"   
-      git config remote.origin.url https://raicastino:${GITHUB_TOKEN}@github.com/raicastino/my_func_com.git
+      git config remote.origin.url https://rcastino:${GITHUB_TOKEN}@github.com/rcastino/my_func_com.git
          
       yarn release-it --ci --no-git.requireUpstream $PACKAGE_VERSION 
     env:
