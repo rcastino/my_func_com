@@ -177,7 +177,7 @@ stages:
 
               git config -l
 
-              yarn release-it --ci  --no-git.requireUpstream --no-git.requireCleanWorkingDir
+              yarn release-it major --ci --no-git.requireUpstream --no-git.requireCleanWorkingDir 
       
 
               
