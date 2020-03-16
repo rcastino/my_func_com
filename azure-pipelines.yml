@@ -168,8 +168,8 @@ stages:
 
               echo "PACK VER: $PACKAGE_VERSION"
               
-              git remote rm origin
-              git remote add origin https://rcastino:${GITHUB_TOKEN}@github.com/rcastino/my_func_com.git
+              git config --global --add url."git@github.com:".insteadOf "https://github.com/"
+
               git config -l   
               yarn release-it --ci --no-git.requireUpstream $PACKAGE_VERSION 
 
