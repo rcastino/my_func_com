@@ -172,6 +172,7 @@ stages:
               git remote add origin https://pippo:${GITHUB_TOKEN}@github.com/rcastino/my_func_com.git
               git config branch.master.merge refs/heads/master
               git config branch.master.remote origin
+              git symbolic-ref HEAD refs/heads/master
 
 
               git config -l
