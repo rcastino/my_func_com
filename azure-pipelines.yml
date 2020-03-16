@@ -164,6 +164,10 @@ stages:
 
               git clone https://pippo:${GITHUB_TOKEN}@github.com/rcastino/my_func_com.git
               cd my_func_com
+
+              git config user.email "io-functions-commons@noreply.github.com>"
+              git config user.name "DevOps Automation"   
+
               yarn install 
 
               echo registry=https://registry.npmjs.com/ >> .npmrc
