@@ -167,7 +167,7 @@ stages:
             # then make sure to add this token as a password in the origin url before running release-it. 
           - bash: |
 
-
+              cd /home/vsts/work/1/s
               
               
               git config -l
