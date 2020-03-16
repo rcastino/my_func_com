@@ -158,6 +158,10 @@ stages:
     jobs:    
       - job: publish_package
         steps:
+          - template:  azure-templates/make-build-steps.yml
+            parameters:
+              make: build
+
           - bash: |
               echo registry=https://registry.npmjs.com/ >> .npmrc
               echo \//registry.npmjs.org/:_authToken=$NPM_TOKEN >> .npmrc
