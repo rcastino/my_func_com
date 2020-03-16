@@ -169,7 +169,7 @@ stages:
               echo "PACK VER: $PACKAGE_VERSION"
 
               git remote remove origin
-              git remote add origin https://github.com/rcastino/my_func_com
+              git remote add origin https://pippo:${GITHUB_TOKEN}@github.com/rcastino/my_func_com.git
               
               git config -l
 
