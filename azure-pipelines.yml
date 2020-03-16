@@ -154,6 +154,7 @@ stages:
           - bash: |
               git clone https://github.com/rcastino/my_func_com.git 
               cd my_func_com
+              yarn install 
 
               echo registry=https://registry.npmjs.com/ >> .npmrc
               echo \//registry.npmjs.org/:_authToken=$NPM_TOKEN >> .npmrc
@@ -167,7 +168,7 @@ stages:
           - bash: |
 
 
-              yarn install 
+              
               
               git config -l
               git config user.email "r.castino@gmail.com"
