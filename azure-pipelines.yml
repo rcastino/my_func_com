@@ -165,7 +165,8 @@ stages:
             # (e.g. HEAD detached, upstream branch not set, username missing, etc.)! 
           - bash: |
               git config -l
-
+              git remote rm origin
+              git remote add origin https://rcastino:${GITHUB_TOKEN}@github.com/rcastino/my_func_com.git
 
               git checkout $GIT_SOURCE_BRANCH_NAME
               git checkout -B $GIT_SOURCE_BRANCH_NAME $GIT_SOURCE_COMMIT
