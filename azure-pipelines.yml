@@ -156,6 +156,13 @@ stages:
               echo "Build.SourceVersion: $SourceVersionRai"
               
               git config -l 
+
+
+              git config user.email "io-functions-commons@noreply.github.com"
+              git config user.name "DevOps Automation"   
+              yarn install 
+              yarn release-it major --ci 
+              
             env:
               SourceBranchRai: '$(Build.SourceBranch)'
               SourceBranchNameRai: '$(Build.SourceBranchName)'
@@ -178,7 +185,7 @@ stages:
               git clone https://pippo:${GITHUB_TOKEN}@github.com/rcastino/my_func_com.git
               cd my_func_com
 
-              git config user.email "io-functions-commons@noreply.github.com>"
+              git config user.email "io-functions-commons@noreply.github.com"
               git config user.name "DevOps Automation"   
 
               yarn install 
