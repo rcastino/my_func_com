@@ -167,13 +167,13 @@ stages:
               git config -l
 
 
-              git checkout $GIT_SOURCE_BRANCH
-              git checkout -B $GIT_SOURCE_BRANCH $GIT_SOURCE_COMMIT
+              git checkout $GIT_SOURCE_BRANCH_NAME
+              git checkout -B $GIT_SOURCE_BRANCH_NAME $GIT_SOURCE_COMMIT
               git config user.name "DevOps Pipeline"
 
               yarn release-it $PACKAGE_VERSION --ci
             env:
-              GIT_SOURCE_BRANCH: '$(Build.SourceBranch)'
+              GIT_SOURCE_BRANCH_NAME: '$(Build.SourceBranchName)'
               GIT_SOURCE_COMMIT: '$(Build.SourceVersion)'
               GITHUB_TOKEN: '$(GITHUB_TOKEN)'
               PACKAGE_VERSION: '$(PACKAGE_VERSION)'
