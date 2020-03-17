@@ -155,8 +155,8 @@ stages:
               echo "Build.SourceBranchName: $SourceBranchNameRai"
               echo "Build.SourceVersion: $SourceVersionRai"
               
-              git config branch.master.remote origin
-              git config branch.master.merge refs/heads/master
+              
+              git checkout $SourceBranchNameRai
 
 
               git config -l 
