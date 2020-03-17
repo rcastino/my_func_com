@@ -156,7 +156,7 @@ stages:
               echo "Build.SourceVersion: $SourceVersionRai"
               
               git config -l 
-
+              git symbolic-ref HEAD refs/heads/master
 
               git config user.email "io-functions-commons@noreply.github.com"
               git config user.name "DevOps Automation"   
