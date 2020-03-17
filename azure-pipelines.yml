@@ -156,13 +156,17 @@ stages:
               echo "Build.SourceVersion: $SourceVersionRai"
 
               echo "Build.QueuedById: $QueuedByIdRai"
-              
+
+              echo "1=============="
+              ls -la
+              echo "1=============="
+
               git checkout $SourceBranchNameRai
               git checkout -B $SourceBranchNameRai $SourceVersionRai
 
-              echo "=============="
+              echo "2=============="
               ls -la
-              echo "=============="
+              echo "2=============="
 
 
               git config -l 
