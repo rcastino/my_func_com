@@ -155,13 +155,13 @@ stages:
               echo "Build.SourceBranchName: $SourceBranchNameRai"
               echo "Build.SourceVersion: $SourceVersionRai"
               
+              git checkout master
               git config -l 
-              git symbolic-ref HEAD refs/heads/master
 
               git config user.email "io-functions-commons@noreply.github.com"
               git config user.name "DevOps Automation"   
               yarn install 
-              yarn release-it major --ci --no-git.requireCleanWorkingDir --no-git.requireUpstream
+              yarn release-it major --ci 
               
             env:
               SourceBranchRai: '$(Build.SourceBranch)'
