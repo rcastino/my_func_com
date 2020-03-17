@@ -164,6 +164,9 @@ stages:
             # Note. The git commands are run only to set the appropriate missing configurations
             # (e.g. HEAD detached, upstream branch not set, username missing, etc.)! 
           - bash: |
+              git config -l
+
+
               git checkout $GIT_SOURCE_BRANCH
               git checkout -B $GIT_SOURCE_BRANCH $GIT_SOURCE_COMMIT
               git config user.name "DevOps Pipeline"
