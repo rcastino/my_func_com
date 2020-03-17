@@ -167,6 +167,7 @@ stages:
               SourceBranchRai: '$(Build.SourceBranch)'
               SourceBranchNameRai: '$(Build.SourceBranchName)'
               SourceVersionRai: '$(Build.SourceVersion)'
+              GITHUB_TOKEN: '$(GITHUB_TOKEN)'
 
             displayName: 'PRINT'
 
