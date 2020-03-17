@@ -147,8 +147,16 @@ stages:
     jobs:    
       - job: publish_package
         steps:
-          - checkout: none
+          - checkout: self
+            persistCredentials: true
 
+          - bash: |
+              echo "Build.SourceBranch: ${Build.SourceBranch}"
+              echo "Build.SourceBranchName: ${Build.SourceBranchName}"
+              echo "Build.SourceVersion: ${Build.SourceVersion}"
+              
+              git config -l 
+            
 
 
           - bash: |
@@ -184,3 +192,4 @@ stages:
               PACKAGE_VERSION: '$(PACKAGE_VERSION)'
               NPM_TOKEN: '$(NPM_TOKEN)'
             displayName: 'release-it'
+            condition: false
