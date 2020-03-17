@@ -173,7 +173,7 @@ stages:
 
               
               git config user.name "DevOps Automation"   
-              yarn install 
+              yarn install --frozen-lockfile --ignore-scripts
               yarn release-it $PACKAGE_VERSION --ci 
               
             env:
