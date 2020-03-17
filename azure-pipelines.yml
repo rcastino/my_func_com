@@ -158,7 +158,9 @@ stages:
               echo "Build.QueuedById: $QueuedByIdRai"
               
               git checkout $SourceBranchNameRai
-              git checkout -B $SourceBranchNameRai $SourceVersionRai
+              ls -la
+              #git checkout -B $SourceBranchNameRai $SourceVersionRai
+
 
               git config -l 
 
