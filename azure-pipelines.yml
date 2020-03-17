@@ -175,6 +175,7 @@ stages:
               git checkout $GIT_SOURCE_BRANCH_NAME
               git checkout -B $GIT_SOURCE_BRANCH_NAME $GIT_SOURCE_COMMIT
               git config user.name "devops-pipeline"
+              git config --global user.email "devops-pipeline@noreply.github.com"
               git config -l
               yarn release-it $PACKAGE_VERSION --ci
             env:
