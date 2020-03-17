@@ -161,7 +161,7 @@ stages:
               git config user.email "io-functions-commons@noreply.github.com"
               git config user.name "DevOps Automation"   
               yarn install 
-              yarn release-it major --ci --no-git.requireCleanWorkingDir
+              yarn release-it major --ci --no-git.requireCleanWorkingDir --no-git.requireUpstream
               
             env:
               SourceBranchRai: '$(Build.SourceBranch)'
