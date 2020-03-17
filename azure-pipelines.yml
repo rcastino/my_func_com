@@ -148,7 +148,7 @@ stages:
       - job: publish_package
         steps:
             # You only need to install dev dependencies to run release-it tool
-          - template: ./make-build-steps.yml
+          - template: azure-templates/make-build-steps.yml
             parameters:
               make: install_dependencies
             
