@@ -18,6 +18,6 @@ module.exports = {
     release: true
   },
   npm: {
-    publish: true
+    publish: false
   }
 };
