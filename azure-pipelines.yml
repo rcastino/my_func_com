@@ -172,7 +172,7 @@ stages:
               git checkout -B $GIT_SOURCE_BRANCH_NAME $GIT_SOURCE_COMMIT
               git config user.name "devops-pipeline"
 
-              yarn release-it $PACKAGE_VERSION --ci
+              yarn release-it $PACKAGE_VERSION --ci --no-git.requireUpstream
             env:
               GIT_SOURCE_BRANCH_NAME: '$(Build.SourceBranchName)'
               GIT_SOURCE_COMMIT: '$(Build.SourceVersion)'
