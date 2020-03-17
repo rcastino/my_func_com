@@ -155,7 +155,7 @@ stages:
               echo "Build.SourceBranchName: $SourceBranchNameRai"
               echo "Build.SourceVersion: $SourceVersionRai"
               
-              
+              git checkout $SourceBranchNameRai
               git checkout -B $SourceBranchNameRai $SourceVersionRai
 
 
