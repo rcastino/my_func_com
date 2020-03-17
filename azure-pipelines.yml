@@ -163,7 +163,7 @@ stages:
             # Environment variable "GITHUB_TOKEN" is required for creating GitHub releases.
             # Note. The git commands are run only to set the appropriate missing configurations
             # (e.g. HEAD detached, upstream branch not set, username missing, etc.)! 
-          - script: |
+          - bash: |
               git checkout $GIT_SOURCE_BRANCH
               git checkout -B $GIT_SOURCE_BRANCH $GIT_SOURCE_COMMIT
               git config user.name "DevOps Pipeline"
