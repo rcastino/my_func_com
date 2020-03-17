@@ -151,12 +151,17 @@ stages:
             persistCredentials: true
 
           - bash: |
-              echo "Build.SourceBranch: ${Build.SourceBranch}"
-              echo "Build.SourceBranchName: ${Build.SourceBranchName}"
-              echo "Build.SourceVersion: ${Build.SourceVersion}"
+              echo "Build.SourceBranch: $SourceBranchRai"
+              echo "Build.SourceBranchName: $SourceBranchNameRai"
+              echo "Build.SourceVersion: $SourceVersionRai"
               
               git config -l 
-            
+            env:
+              SourceBranchRai: '$(Build.SourceBranch)'
+              SourceBranchNameRai: '$(Build.SourceBranchName)'
+              SourceVersionRai: '$(Build.SourceVersion)'
+
+            displayName: 'PRINT'
 
 
           - bash: |
