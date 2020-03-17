@@ -160,7 +160,6 @@ stages:
               git checkout $SourceBranchNameRai
               git checkout -B $SourceBranchNameRai $SourceVersionRai
 
-
               git config -l 
 
               
@@ -173,7 +172,6 @@ stages:
               SourceBranchNameRai: '$(Build.SourceBranchName)'
               SourceVersionRai: '$(Build.SourceVersion)'
               QueuedByIdRai: '$(Build.QueuedById)'
-              GITHUB_TOKEN: '$(GITHUB_TOKEN)'
               PACKAGE_VERSION: '$(PACKAGE_VERSION)'
 
             displayName: 'PRINT'
