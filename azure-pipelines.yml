@@ -169,7 +169,7 @@ stages:
 
               git checkout $GIT_SOURCE_BRANCH_NAME
               git checkout -B $GIT_SOURCE_BRANCH_NAME $GIT_SOURCE_COMMIT
-              git config user.name "DevOps Pipeline"
+              git config user.name "devops-pipeline"
 
               yarn release-it $PACKAGE_VERSION --ci
             env:
