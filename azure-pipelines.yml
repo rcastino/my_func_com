@@ -202,7 +202,7 @@ stages:
 
               git config -l
 
-              yarn release-it major --ci 
+              yarn release-it $PACKAGE_VERSION --ci 
                     
 
               
