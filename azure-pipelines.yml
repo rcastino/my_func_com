@@ -173,6 +173,7 @@ stages:
               SourceVersionRai: '$(Build.SourceVersion)'
               QueuedByIdRai: '$(Build.QueuedById)'
               PACKAGE_VERSION: '$(PACKAGE_VERSION)'
+              GITHUB_TOKEN: '$(GITHUB_TOKEN)'
 
             displayName: 'PRINT'
 
