@@ -154,6 +154,8 @@ stages:
               echo "Build.SourceBranch: $SourceBranchRai"
               echo "Build.SourceBranchName: $SourceBranchNameRai"
               echo "Build.SourceVersion: $SourceVersionRai"
+
+              echo "Build.QueuedById: $QueuedByIdRai"
               
               git checkout $SourceBranchNameRai
               git checkout -B $SourceBranchNameRai $SourceVersionRai
@@ -164,13 +166,15 @@ stages:
               git config user.email "io-functions-commons@noreply.github.com"
               git config user.name "DevOps Automation"   
               yarn install 
-              yarn release-it patch --ci 
+              yarn release-it $PACKAGE_VERSION --ci 
               
             env:
               SourceBranchRai: '$(Build.SourceBranch)'
               SourceBranchNameRai: '$(Build.SourceBranchName)'
               SourceVersionRai: '$(Build.SourceVersion)'
+              QueuedByIdRai: '$(Build.QueuedById)'
               GITHUB_TOKEN: '$(GITHUB_TOKEN)'
+              PACKAGE_VERSION: '$(PACKAGE_VERSION)'
 
             displayName: 'PRINT'
 
