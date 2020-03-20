@@ -65,6 +65,8 @@ stages:
     dependsOn: []
     jobs:
       - job: run_az_cli
+        pool:
+          vmImage: 'windows-2019'      
         steps:
           - task: AzureCLI@2
             inputs:
