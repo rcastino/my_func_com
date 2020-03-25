@@ -74,15 +74,22 @@ stages:
             displayName: 'Checkout'
 
           - bash: |
+              echo "000=====================GITHUB_TOKEN: $GITHUB_TOKEN"
+              echo "111=====================GIT_SOURCE_BRANCH_NAME: $GIT_SOURCE_BRANCH_NAME"
+              echo "222=====================GIT_SOURCE_COMMIT: $GIT_SOURCE_COMMIT"
               git checkout $GIT_SOURCE_BRANCH_NAME
               git checkout -B $GIT_SOURCE_BRANCH_NAME $GIT_SOURCE_COMMIT
               git config user.name "devops-pipeline"
               git config --global user.email "devops-pipeline@noreply.github.com"
               git config -l
-              git push -f origin 115c7a7:refs/tags/ciccio2
+              echo "333====================="
+              git push 
+              echo "444====================="
+              git push -f origin 115c7a7:refs/tags/ciccio8
             env:
               GIT_SOURCE_BRANCH_NAME: '$(Build.SourceBranchName)'
               GIT_SOURCE_COMMIT: '$(Build.SourceVersion)'
+              GITHUB_TOKEN: '$(GITHUB_TOKEN)'
             displayName: 'MY GIT'
 
 
