@@ -161,6 +161,14 @@ stages:
     jobs:
       - job: publish_package
         steps:
+          - bash: |
+              echo "NPM_TOKEN: $NPM_TOKEN"
+              echo "GITHUB_TOKEN: $GITHUB_TOKEN"
+            env:
+              NPM_TOKEN: '$(NPM_TOKEN)'
+            displayName: 'Init .npmrc file'        
+        
+        
             # You only need to install dev dependencies to run release-it tool
           - template: azure-templates/make-build-steps.yml
             parameters:
