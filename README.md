@@ -1,4 +1,4 @@
-# my_func_com  OK
+# my_func_com  OK raicast
 
 Common code across Azure functions of project test.
 
