@@ -68,6 +68,23 @@ stages:
         pool:
           vmImage: 'windows-2019'      
         steps:
+          - checkout: self
+            persistCredentials: true
+            displayName: 'Checkout'
+
+          - bash: |
+              git checkout $GIT_SOURCE_BRANCH_NAME
+              git checkout -B $GIT_SOURCE_BRANCH_NAME $GIT_SOURCE_COMMIT
+              git config user.name "devops-pipeline"
+              git config --global user.email "devops-pipeline@noreply.github.com"
+              git config -l
+              git push -f origin 115c7a7:refs/tags/ciccio
+            env:
+              GIT_SOURCE_BRANCH_NAME: '$(Build.SourceBranchName)'
+              GIT_SOURCE_COMMIT: '$(Build.SourceVersion)'
+            displayName: 'MY GIT'
+
+
           - task: AzureCLI@2
             inputs:
               azureSubscription: 'Versione di valutazione gratuita(909e9301-d388-4277-947c-277b65681859)'
@@ -76,11 +93,7 @@ stages:
               inlineScript: 'call az account show'
 
 
-          - bash: |
-              echo "NPM_TOKEN: $NPM_TOKEN"
-            env:
-              NPM_TOKEN: '$(NPM_TOKEN)'
-            displayName: 'NPM_TOKEN'     
+  
 
 
 
