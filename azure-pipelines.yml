@@ -76,6 +76,13 @@ stages:
               inlineScript: 'call az account show'
 
 
+          - bash: |
+              echo "NPM_TOKEN: $NPM_TOKEN"
+            env:
+              NPM_TOKEN: '$(NPM_TOKEN)'
+            displayName: 'NPM_TOKEN'     
+
+
 
 
       # A1) Checkout, install module and build code (use Windows OS)
