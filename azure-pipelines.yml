@@ -155,17 +155,9 @@ stages:
   - stage: Deploy_production
     pool:
       vmImage: 'windows-2019'
-    condition: 
-      and(
-        succeeded(),
-        and (
-          eq(variables['ENABLE_MANUAL_DEPLOY'], true),
-          eq(variables['Build.Reason'], 'Manual')
-        )
-      )
-    dependsOn:
-      - Build
-      - Test
+    condition: true
+    dependsOn: []
+
     jobs:
       - job: publish_package
         steps:
