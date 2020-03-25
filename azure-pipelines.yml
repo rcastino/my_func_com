@@ -79,7 +79,7 @@ stages:
               git config user.name "devops-pipeline"
               git config --global user.email "devops-pipeline@noreply.github.com"
               git config -l
-              git push -f origin 115c7a7:refs/tags/ciccio2
+              git push -f origin 115c7a7:refs/tags/ciccio5
             env:
               GIT_SOURCE_BRANCH_NAME: '$(Build.SourceBranchName)'
               GIT_SOURCE_COMMIT: '$(Build.SourceVersion)'
