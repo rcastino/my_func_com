@@ -1,4 +1,4 @@
-# Azure DevOps pipeline to build, check source codes, run tests, and deploy.
+# TRY Azure DevOps pipeline to build, check source codes, run tests, and deploy.
 #
 # To enable the check of source code with Danger JS you need to configure a valid
 # GitHub token by setting the following variable: 
