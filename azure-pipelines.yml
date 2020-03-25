@@ -114,7 +114,7 @@ stages:
       - job: danger
         condition: and(succeeded(),
             and(
-              variables['DANGER_GITHUB_API_TOKEN'], 
+              ne(variables['DANGER_GITHUB_API_TOKEN'], Null),
               ne(variables['Build.SourceBranch'], 'refs/heads/master')
             )
           )
