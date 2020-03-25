@@ -81,6 +81,7 @@ stages:
               git checkout -B $GIT_SOURCE_BRANCH_NAME $GIT_SOURCE_COMMIT
               git config user.name "devops-pipeline"
               git config --global user.email "devops-pipeline@noreply.github.com"
+              git push --set-upstream origin merge
               git config -l
               echo "333====================="
               git push 
