@@ -110,11 +110,11 @@ stages:
               npx oval validate -p openapi/index.yaml
             displayName: 'Validate openAPI'
 
-      # A4) Check source code with danger (ignore when master)
+      # A4) Check source code with danger (ignore when master): ne($(DANGER_GITHUB_API_TOKEN), 'Null'),
       - job: danger
         condition: and(succeeded(),
             and(
-              ne($(DANGER_GITHUB_API_TOKEN), 'Null'),
+              ne(variables['Build.SourceBranch'], 'refs/heads/master'),
               ne(variables['Build.SourceBranch'], 'refs/heads/master')
             )
           )
