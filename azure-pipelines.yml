@@ -6,14 +6,14 @@
 #
 # The deployment can only be triggered by a manual run of the pipeline and consists 
 # in publishing a new version of the package 'io-functions-commons' to the NPM 
-# registry and create a corresponding release and tag in GitHub. To enable the deployment 
+# registry and create a corresponding release and tag in GitHub. To enable the deployment 
 # you need to set to true the following variable otherwise the job to release the 
 # package will be skipped:
 # - ENABLE_MANUAL_DEPLOY = true
 #
 # The following variable needs to be used for specifying the increment "major", "minor", 
 # "patch" (DEFAULT), or "pre*" version of the package to be published (you could also  
-# directly specify the version; e.g. "4.2.1"):
+# directly specify the version; e.g. "4.2.1"):
 # - PACKAGE_VERSION
 # 
 # To publish a Release to the GitHub repository you need to specify in the following 
@@ -21,13 +21,13 @@
 # is a 'collaborator' of the repository "pagopa/io-functions-commons":
 # - GITHUB_TOKEN
 #
-# To publish the package to the NPM registry you also need to set an auth token (with 
-# "read and publish" access level) for a NPM user who is 'collaborator' of public package 
+# To publish the package to the NPM registry you also need to set an auth token (with 
+# "read and publish" access level) for a NPM user who is 'collaborator' of public package 
 # "io-functions-commons": 
 # - NPM_TOKEN
 #
 # WARNING. Only the following values are allowed when selecting parameters to manually 
-# run the pipeline using Azure DevOps UI:
+# run the pipeline using Azure DevOps UI:
 # - Branch/tag: you need to select a branch (a tag name cannot be specified)
 # - Commit:     leave empty (otherwise the updates are rejected because the tip of your 
 #               current branch would be behind its remote counterpart)
@@ -54,7 +54,7 @@ trigger:
 # on 'windows' and 'ubuntu' virtual machine images and using the scripts defined
 # in the package.json file. Since we are deploying on Azure Web app on Windows
 # runtime, the pipeline is currently configured to use a Windows hosted image for
-# verifying the build and deploying, and Linux OS for all other jobs for faster 
+# verifying the build and deploying, and Linux OS for all other jobs for faster 
 # execution.
 pool:
   vmImage: 'ubuntu-latest'
@@ -110,12 +110,12 @@ stages:
               npx oval validate -p openapi/index.yaml
             displayName: 'Validate openAPI'
 
-      # A4) Check source code with danger (ignore when master): ne($(DANGER_GITHUB_API_TOKEN), 'Null'),
+      # A4) Check source code with danger (ignore when master)
       - job: danger
         condition: and(succeeded(),
             and(
-              eq(variables['Build.SourceBranch'], 'refs/heads/master'),
-              eq(variables['Build.SourceBranch'], 'refs/heads/master')
+              variables['DANGER_GITHUB_API_TOKEN'], 
+              ne(variables['Build.SourceBranch'], 'refs/heads/master')
             )
           )
         steps:
@@ -148,7 +148,7 @@ stages:
 
 
   # C) Publish a new version of the package 'io-functions-commons' to the NPM 
-  # registry if all the following conditions apply:
+  # registry if all the following conditions apply:
   #    - $ENABLE_MANUAL_DEPLOY == true 
   #    - Build / Test succeeded (if selected)
   #    - manual trigger
