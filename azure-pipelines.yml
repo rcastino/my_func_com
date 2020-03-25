@@ -155,10 +155,7 @@ stages:
   - stage: Deploy_production
     pool:
       vmImage: 'windows-2019'
-    condition: [] 
-    dependsOn:
-      - Build
-      - Test
+    dependsOn: []
     jobs:
       - job: publish_package
         steps:
