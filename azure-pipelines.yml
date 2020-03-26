@@ -80,7 +80,7 @@ stages:
             displayName: 'Checkout'
 
           - bash: |
-              echo "CICCIO: $CICCIO"
+              echo "CICCIO3: $CICCIO3"
               git checkout $GIT_SOURCE_BRANCH_NAME
               git checkout -B $GIT_SOURCE_BRANCH_NAME $GIT_SOURCE_COMMIT
               git config user.name "devops-pipeline"
@@ -90,7 +90,7 @@ stages:
             env:
               GIT_SOURCE_BRANCH_NAME: '$(Build.SourceBranchName)'
               GIT_SOURCE_COMMIT: '$(Build.SourceVersion)'
-              CICCIO: '$(CICCIO)'
+              CICCIO3: '$(CICCIO3)'
             displayName: 'MY GIT'
 
 
