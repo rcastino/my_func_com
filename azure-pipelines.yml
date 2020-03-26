@@ -68,8 +68,8 @@ stages:
       - job: run_az_cli
         condition: and(succeeded(),
             and(
-              eq(variables['CICCIO'], '1'),
-              ne(variables['Build.SourceBranch'], 'refs/heads/master')
+              eq(variables['CICCIO2'], Null),
+              ne(variables['Build.SourceBranch'], 'refs/heads/pippo')
             )
           )
         pool:
