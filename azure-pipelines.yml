@@ -1,7 +1,8 @@
 # Azure DevOps pipeline to build, check source codes, run tests, and deploy.
 #
-# To enable the check of source code with Danger JS you need to configure a valid
-# GitHub token by setting the following variable: 
+# To make Danger JS run on a pull request you need to add the following pipeline 
+# variable and set it with a GitHub access token (scope public_repo); otherwise 
+# set its value to 'skip' without marking it secret: 
 # - DANGER_GITHUB_API_TOKEN
 #
 # The deployment can only be triggered by a manual run of the pipeline and consists 
@@ -66,16 +67,10 @@ stages:
     dependsOn: []
     jobs:
       - job: run_az_cli
-        condition: and(succeeded(),
-            and(
-              True,
-              ne(variables['Build.SourceBranch'], 'refs/heads/pippo')
-            )
-          )
+        condition: and(succeeded(), ne(variables['DANGER_GITHUB_API_TOKEN'], 'skip'))
         pool:
           vmImage: 'windows-2019'      
         steps:
-
 
           - template: azure-templates/make-build-steps.yml
             parameters:
@@ -85,17 +80,13 @@ stages:
               echo "DANGER_GITHUB_API_TOKEN: $DANGER_GITHUB_API_TOKEN"
               echo "BUILD_REASON: $BUILD_REASON"
               echo "GIT_SOURCE_BRANCH_NAME: $GIT_SOURCE_BRANCH_NAME"
-              echo "GIT_SOURCE_BRANCH_NAME: $GIT_SOURCE_BRANCH_NAME"
-              
-              yarn danger ci 
-
+              echo "SOURCE_BRANCH: $SOURCE_BRANCH"
             env:
               GIT_SOURCE_BRANCH_NAME: '$(Build.SourceBranchName)'
               GIT_SOURCE_COMMIT: '$(Build.SourceVersion)'
               BUILD_REASON: '$(Build.Reason)'
-              DANGER_GITHUB_API_TOKEN: '$(DANGER_GITHUB_API_TOKEN)'
+              SOURCE_BRANCH: '$(Build.SourceBranch)'       
             displayName: 'MY GIT'
-
 
           - task: AzureCLI@2
             inputs:
@@ -104,15 +95,8 @@ stages:
               scriptLocation: 'inlineScript'
               inlineScript: 'call az account show'
 
-
-  
-
-
-
-
       # A1) Checkout, install module and build code (use Windows OS)
       - job: make_build
-        condition: false
         pool:
           vmImage: 'windows-2019'
         steps:
@@ -122,7 +106,6 @@ stages:
             
       # A2) Analyze source code to find errors with lint
       - job: lint
-        condition: false
         steps:
           - template: azure-templates/make-build-steps.yml
             parameters:
@@ -134,7 +117,6 @@ stages:
 
       # A3) Validate API definitions
       - job: lint_api
-        condition: false
         steps:
           - task: UseNode@1
             inputs:
@@ -145,12 +127,14 @@ stages:
               npx oval validate -p openapi/index.yaml
             displayName: 'Validate openAPI'
 
-      # A4) Check source code with danger (ignore when master)
+      # A4) Run Danger (skipping if not executing on a PR)
       - job: danger
-        condition: and(succeeded(),
+        condition: 
+          and(
+            succeeded(), 
             and(
-              variables['DANGER_GITHUB_API_TOKEN'], 
-              ne(variables['Build.SourceBranch'], 'refs/heads/master')
+              eq(variables['Build.Reason'], 'PullRequest'),
+              ne(variables['DANGER_GITHUB_API_TOKEN'], 'skip')
             )
           )
         steps:
@@ -160,12 +144,13 @@ stages:
 
           - bash: |
               yarn danger ci
+            env:
+              DANGER_GITHUB_API_TOKEN: '$(DANGER_GITHUB_API_TOKEN)'
             displayName: 'Danger CI'
 
 
   # B) Run unit tests (use Linux OS, also required to generate certificates)
   - stage: Test
-    condition: false
     dependsOn: []
     jobs:
       - job: unit_tests
