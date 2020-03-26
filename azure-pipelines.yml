@@ -69,7 +69,7 @@ stages:
         condition: and(succeeded(),
             and(
               eq(variables['CICCIO'], '1'),
-              ne(variables['Build.SourceBranch'], 'refs/heads/pippo')
+              ne(variables['Build.SourceBranch'], 'refs/heads/master')
             )
           )
         pool:
