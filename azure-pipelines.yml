@@ -79,18 +79,19 @@ stages:
             persistCredentials: true
             displayName: 'Checkout'
 
-          - bash: |
-              echo "CICCIO3: $CICCIO3"
-              git checkout $GIT_SOURCE_BRANCH_NAME
-              git checkout -B $GIT_SOURCE_BRANCH_NAME $GIT_SOURCE_COMMIT
-              git config user.name "devops-pipeline"
-              git config --global user.email "devops-pipeline@noreply.github.com"
-              git config -l
-              #git push -f origin 115c7a7:refs/tags/ciccio2
+          - bash: |              
+              echo "DANGER_GITHUB_API_TOKEN: $DANGER_GITHUB_API_TOKEN"
+              echo "BUILD_REASON: $BUILD_REASON"
+              echo "GIT_SOURCE_BRANCH_NAME: $GIT_SOURCE_BRANCH_NAME"
+              echo "GIT_SOURCE_BRANCH_NAME: $GIT_SOURCE_BRANCH_NAME"
+              
+              yarn danger ci 
+
             env:
               GIT_SOURCE_BRANCH_NAME: '$(Build.SourceBranchName)'
               GIT_SOURCE_COMMIT: '$(Build.SourceVersion)'
-              CICCIO3: '$(CICCIO3)'
+              BUILD_REASON: '$(Build.Reason)'
+              DANGER_GITHUB_API_TOKEN: '$(DANGER_GITHUB_API_TOKEN)'
             displayName: 'MY GIT'
 
 
