@@ -72,7 +72,6 @@ stages:
           vmImage: 'windows-2019'      
         steps:
 
-
           - template: azure-templates/make-build-steps.yml
             parameters:
               make: install_dependencies
