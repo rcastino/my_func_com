@@ -87,7 +87,7 @@ stages:
               echo "GIT_SOURCE_BRANCH_NAME: $GIT_SOURCE_BRANCH_NAME"
               echo "SOURCE_BRANCH: $SOURCE_BRANCH"
               
-              yarn danger ci 
+              #yarn danger ci 
 
             env:
               GIT_SOURCE_BRANCH_NAME: '$(Build.SourceBranchName)'
@@ -146,11 +146,11 @@ stages:
               npx oval validate -p openapi/index.yaml
             displayName: 'Validate openAPI'
 
-      # A4) Check source code with danger (ignore when master)
+      # A4) Check source code with Danger (skipping if not executing on a PR)
       - job: danger
         condition: and(succeeded(),
             and(
-              variables['DANGER_GITHUB_API_TOKEN'], 
+              eq(variables['Build.Reason'], 'PullRequest'), 
               ne(variables['Build.SourceBranch'], 'refs/heads/master')
             )
           )
@@ -161,6 +161,8 @@ stages:
 
           - bash: |
               yarn danger ci
+            env:
+              DANGER_GITHUB_API_TOKEN: '$(DANGER_GITHUB_API_TOKEN)'
             displayName: 'Danger CI'
 
 
