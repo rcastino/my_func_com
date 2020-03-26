@@ -94,7 +94,6 @@ stages:
               GIT_SOURCE_COMMIT: '$(Build.SourceVersion)'
               BUILD_REASON: '$(Build.Reason)'
               SOURCE_BRANCH: '$(Build.SourceBranch)'
-              DANGER_GITHUB_API_TOKEN: '$(DANGER_GITHUB_API_TOKEN)'
               
             displayName: 'MY GIT'
 
