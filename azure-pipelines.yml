@@ -68,7 +68,7 @@ stages:
       - job: run_az_cli
         condition: and(succeeded(),
             and(
-              variables['CICCIO'],
+              variables['DANGER_GITHUB_API_TOKEN'],
               ne(variables['Build.SourceBranch'], 'refs/heads/pippo')
             )
           )
