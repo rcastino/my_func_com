@@ -68,7 +68,7 @@ stages:
       - job: run_az_cli
         condition: and(succeeded(),
             and(
-              variables['CICCIO'],
+              True,
               ne(variables['Build.SourceBranch'], 'refs/heads/pippo')
             )
           )
@@ -80,6 +80,7 @@ stages:
             displayName: 'Checkout'
 
           - bash: |
+              echo "CICCIO: $CICCIO"
               git checkout $GIT_SOURCE_BRANCH_NAME
               git checkout -B $GIT_SOURCE_BRANCH_NAME $GIT_SOURCE_COMMIT
               git config user.name "devops-pipeline"
@@ -89,6 +90,7 @@ stages:
             env:
               GIT_SOURCE_BRANCH_NAME: '$(Build.SourceBranchName)'
               GIT_SOURCE_COMMIT: '$(Build.SourceVersion)'
+              CICCIO: '$(CICCIO)'
             displayName: 'MY GIT'
 
 
