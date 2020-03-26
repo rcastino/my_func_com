@@ -75,9 +75,11 @@ stages:
         pool:
           vmImage: 'windows-2019'      
         steps:
-          - checkout: self
-            persistCredentials: true
-            displayName: 'Checkout'
+
+
+          - template: azure-templates/make-build-steps.yml
+            parameters:
+              make: install_dependencies
 
           - bash: |              
               echo "DANGER_GITHUB_API_TOKEN: $DANGER_GITHUB_API_TOKEN"
