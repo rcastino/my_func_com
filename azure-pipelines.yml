@@ -66,12 +66,7 @@ stages:
     dependsOn: []
     jobs:
       - job: run_az_cli
-        condition: and(succeeded(),
-            and(
-              True,
-              ne(variables['Build.SourceBranch'], 'refs/heads/pippo')
-            )
-          )
+        condition: and(succeeded(), variables['CICCIO'])
         pool:
           vmImage: 'windows-2019'      
         steps:
@@ -148,12 +143,7 @@ stages:
 
       # A4) Check source code with Danger (skipping if not executing on a PR)
       - job: danger
-        condition: and(succeeded(),
-            and(
-              eq(variables['Build.Reason'], 'PullRequest'), 
-              ne(variables['Build.SourceBranch'], 'refs/heads/master')
-            )
-          )
+        condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
         steps:
           - template: azure-templates/make-build-steps.yml
             parameters:
