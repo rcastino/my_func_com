@@ -68,7 +68,7 @@ stages:
       - job: run_az_cli
         condition: and(succeeded(),
             and(
-              variables['CICCIO2'],
+              variables['CICCIO'],
               ne(variables['Build.SourceBranch'], 'refs/heads/pippo')
             )
           )
