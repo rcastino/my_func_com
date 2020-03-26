@@ -66,6 +66,12 @@ stages:
     dependsOn: []
     jobs:
       - job: run_az_cli
+        condition: and(succeeded(),
+            and(
+              eq(variables['CICCIO'], '1'),
+              ne(variables['Build.SourceBranch'], 'refs/heads/pippo')
+            )
+          )
         pool:
           vmImage: 'windows-2019'      
         steps:
@@ -79,7 +85,7 @@ stages:
               git config user.name "devops-pipeline"
               git config --global user.email "devops-pipeline@noreply.github.com"
               git config -l
-              git push -f origin 115c7a7:refs/tags/ciccio2
+              #git push -f origin 115c7a7:refs/tags/ciccio2
             env:
               GIT_SOURCE_BRANCH_NAME: '$(Build.SourceBranchName)'
               GIT_SOURCE_COMMIT: '$(Build.SourceVersion)'
@@ -101,6 +107,7 @@ stages:
 
       # A1) Checkout, install module and build code (use Windows OS)
       - job: make_build
+        condition: false
         pool:
           vmImage: 'windows-2019'
         steps:
@@ -110,6 +117,7 @@ stages:
             
       # A2) Analyze source code to find errors with lint
       - job: lint
+        condition: false
         steps:
           - template: azure-templates/make-build-steps.yml
             parameters:
@@ -121,6 +129,7 @@ stages:
 
       # A3) Validate API definitions
       - job: lint_api
+        condition: false
         steps:
           - task: UseNode@1
             inputs:
@@ -151,6 +160,7 @@ stages:
 
   # B) Run unit tests (use Linux OS, also required to generate certificates)
   - stage: Test
+    condition: false
     dependsOn: []
     jobs:
       - job: unit_tests
