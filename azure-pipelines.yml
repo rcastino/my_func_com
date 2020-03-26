@@ -85,7 +85,7 @@ stages:
               echo "DANGER_GITHUB_API_TOKEN: $DANGER_GITHUB_API_TOKEN"
               echo "BUILD_REASON: $BUILD_REASON"
               echo "GIT_SOURCE_BRANCH_NAME: $GIT_SOURCE_BRANCH_NAME"
-              echo "GIT_SOURCE_BRANCH_NAME: $GIT_SOURCE_BRANCH_NAME"
+              echo "SOURCE_BRANCH: $SOURCE_BRANCH"
               
               yarn danger ci 
 
@@ -93,7 +93,9 @@ stages:
               GIT_SOURCE_BRANCH_NAME: '$(Build.SourceBranchName)'
               GIT_SOURCE_COMMIT: '$(Build.SourceVersion)'
               BUILD_REASON: '$(Build.Reason)'
+              SOURCE_BRANCH: '$(Build.SourceBranch)'
               DANGER_GITHUB_API_TOKEN: '$(DANGER_GITHUB_API_TOKEN)'
+              
             displayName: 'MY GIT'
 
 
