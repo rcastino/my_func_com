@@ -1,4 +1,4 @@
-# my_func_com  OK local
+# my_func_com  OK local pippo
 
 Common code across Azure functions of project test.
 
