@@ -66,7 +66,7 @@ stages:
     dependsOn: []
     jobs:
       - job: run_az_cli
-        condition: and(succeeded(), variables['CICCIO'])
+        condition: and(succeeded(), $[ variables['CICCIO'] ])
         pool:
           vmImage: 'windows-2019'      
         steps:
