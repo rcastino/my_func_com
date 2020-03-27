@@ -1,5 +1,5 @@
 # Azure DevOps pipeline template used to checkout, install node dependencies 
-# and build the code.
+# and build the code. OK
 
 parameters:
   - name: 'make'
