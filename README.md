@@ -1,4 +1,4 @@
-# my_func_com  OK  danger CHANGE1 su to_delete
+# my_func_com  OK  danger CHANGE1 su to_delete 2
 
 Common code across Azure functions of project test.
 
