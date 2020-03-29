@@ -1,4 +1,4 @@
-# my_func_com  CHANGE this change
+# my_func_com  CHANGE this change 2
 
 Common code across Azure functions of project test.
 
