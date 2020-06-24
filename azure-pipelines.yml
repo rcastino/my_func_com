@@ -88,12 +88,7 @@ stages:
               SOURCE_BRANCH: '$(Build.SourceBranch)'       
             displayName: 'MY GIT'
 
-          - task: AzureCLI@2
-            inputs:
-              azureSubscription: 'Versione di valutazione gratuita(909e9301-d388-4277-947c-277b65681859)'
-              scriptType: 'batch'
-              scriptLocation: 'inlineScript'
-              inlineScript: 'call az account show'
+        
 
       # A1) Checkout, install module and build code (use Windows OS)
       - job: make_build
