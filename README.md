@@ -1,4 +1,4 @@
-# my_func_com  OK  danger CHANGE1
+# my_func_com  OK2
 
 Common code across Azure functions of project test.
 
