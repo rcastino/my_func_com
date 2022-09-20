@@ -1,7 +1,8 @@
-# Azure DevOps pipeline to build, check source codes, run tests, and deploy.
+# OK Azure DevOps pipeline to build, check source codes, run tests, and deploy.
 #
-# To enable the check of source code with Danger JS you need to configure a valid
-# GitHub token by setting the following variable: 
+# To make Danger JS run on a pull request you need to add the following pipeline 
+# variable and set it with a GitHub access token (scope public_repo); otherwise 
+# set its value to 'skip' without marking it secret:
 # - DANGER_GITHUB_API_TOKEN
 #
 # The deployment can only be triggered by a manual run of the pipeline and consists 
@@ -66,38 +67,29 @@ stages:
     dependsOn: []
     jobs:
       - job: run_az_cli
+        condition: and(succeeded(), ne(variables['DANGER_GITHUB_API_TOKEN'], 'skip'))
         pool:
           vmImage: 'windows-2019'      
         steps:
-          - checkout: self
-            persistCredentials: true
-            displayName: 'Checkout'
 
-          - bash: |
-              git checkout $GIT_SOURCE_BRANCH_NAME
-              git checkout -B $GIT_SOURCE_BRANCH_NAME $GIT_SOURCE_COMMIT
-              git config user.name "devops-pipeline"
-              git config --global user.email "devops-pipeline@noreply.github.com"
-              git config -l
-              git push -f origin 115c7a7:refs/tags/ciccio5
+          - template: azure-templates/make-build-steps.yml
+            parameters:
+              make: install_dependencies
+
+          - bash: |              
+              echo "DANGER_GITHUB_API_TOKEN: $DANGER_GITHUB_API_TOKEN"
+              echo "BUILD_REASON: $BUILD_REASON"
+              echo "GIT_SOURCE_BRANCH_NAME: $GIT_SOURCE_BRANCH_NAME"
+              echo "SOURCE_BRANCH: $SOURCE_BRANCH"
+
             env:
               GIT_SOURCE_BRANCH_NAME: '$(Build.SourceBranchName)'
               GIT_SOURCE_COMMIT: '$(Build.SourceVersion)'
+              BUILD_REASON: '$(Build.Reason)'
+              SOURCE_BRANCH: '$(Build.SourceBranch)'       
             displayName: 'MY GIT'
 
-
-          - task: AzureCLI@2
-            inputs:
-              azureSubscription: 'Versione di valutazione gratuita(909e9301-d388-4277-947c-277b65681859)'
-              scriptType: 'batch'
-              scriptLocation: 'inlineScript'
-              inlineScript: 'call az account show'
-
-
-  
-
-
-
+        
 
       # A1) Checkout, install module and build code (use Windows OS)
       - job: make_build
@@ -131,12 +123,14 @@ stages:
               npx oval validate -p openapi/index.yaml
             displayName: 'Validate openAPI'
 
-      # A4) Check source code with danger (ignore when master)
+      # A4) Run Danger (skipping if not executing on a PR)
       - job: danger
-        condition: and(succeeded(),
+        condition: 
+          and(
+            succeeded(), 
             and(
-              variables['DANGER_GITHUB_API_TOKEN'], 
-              ne(variables['Build.SourceBranch'], 'refs/heads/master')
+              eq(variables['Build.Reason'], 'PullRequest'),
+              ne(variables['DANGER_GITHUB_API_TOKEN'], 'skip')
             )
           )
         steps:
@@ -146,6 +140,8 @@ stages:
 
           - bash: |
               yarn danger ci
+            env:
+              DANGER_GITHUB_API_TOKEN: '$(DANGER_GITHUB_API_TOKEN)'
             displayName: 'Danger CI'
 
 
